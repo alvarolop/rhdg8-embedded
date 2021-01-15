@@ -49,4 +49,6 @@ In this repository, we are going to focus on the first mode: Embedded. For more 
 
 
 
+== Useful links
 
+* https://access.redhat.com/documentation/en-us/red_hat_data_grid/8.1/html-single/data_grid_library_mode/indexÞ[Documenation: DG Library mode].
