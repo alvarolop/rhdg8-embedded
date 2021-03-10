@@ -23,7 +23,7 @@ endif::[]
 
 This repository contains a demo of Red Hat Data Grid 8 in Embedded mode (Library mode). It also contains all the Openshift resources to deploy the code easily.
 
-Some of the sections of the documentation and Java code are based on the official examples of Infinispan and Data Grid public repositories. Check the following repositories: https://github.com/redhat-developer/redhat-datagrid-tutorialsþ[DG Tutorials] and https://github.com/jboss-developer/jboss-jdg-quickstarts/tree/jdg-7.3.x[DG Quickstarts].
+Some of the sections of the documentation and Java code are based on the official examples of Infinispan and Data Grid public repositories. Check the following repositories: https://github.com/redhat-developer/redhat-datagrid-tutorials[DG Tutorials] and https://github.com/jboss-developer/jboss-jdg-quickstarts/tree/jdg-7.3.x[DG Quickstarts].
 
 // Create the Table of contents here
 toc::[]
@@ -36,7 +36,7 @@ Red Hat Data Grid is an in-memory, distributed, NoSQL datastore solution. Your a
 
 * Remote Client-Server Mode provides a self-contained process in a container based on JBoss EAP. RHDG runs remotely and provides access to data through Hot Rod, REST, or CLI interfaces.
 
-In this repository, we are going to focus on the first mode: Embedded. For more examples and configuration examples of the Remote client-server mode, please check this https://github.com/alvarolop/rhdg8-server[repository].
+In this repository, we are going to focus on the first mode: Embedded. For more applications and configuration examples of the Remote client-server mode, please check this https://github.com/alvarolop/rhdg8-server[repository].
 
 
 == Running the application
