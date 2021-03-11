@@ -1,4 +1,4 @@
-package org.infinispan.tutorial.simple.spring.session;
+package com.alopezme.embeddedbooks;
 
 import org.infinispan.configuration.cache.CacheMode;
 import org.infinispan.configuration.cache.Configuration;
@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
 @EnableInfinispanEmbeddedHttpSession
-public class UserSessionsApp {
+public class BooksApp {
 
     @Bean
     public InfinispanGlobalConfigurer globalCustomizer() {
@@ -34,6 +34,6 @@ public class UserSessionsApp {
     }
 
     public static void main(String... args) {
-        new SpringApplicationBuilder().sources(UserSessionsApp.class).run(args);
+        new SpringApplicationBuilder().sources(BooksApp.class).run(args);
     }
 }

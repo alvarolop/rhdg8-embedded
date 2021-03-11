@@ -8,10 +8,11 @@
     <version>1.0.0</version>
 
     <properties>
-        <version.spring.boot>2.3.5.RELEASE</version.spring.boot>
+        <version.spring.boot>2.3.4.RELEASE</version.spring.boot>
         <version.spring.session>2.3.0.RELEASE</version.spring.session>
-        <version.spring.boot.infinispan>2.3.3.Final-redhat-00001</version.spring.boot.infinispan>
-        <version.infinispan>11.0.3.Final-redhat-00001</version.infinispan>
+        <version.spring.boot.infinispan>2.3.6.Final-redhat-00001</version.spring.boot.infinispan>
+        <version.infinispan>11.0.9.Final-redhat-00001</version.infinispan>
+        <lombok.version>1.18.18</lombok.version>
         <java.version>11</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
@@ -37,7 +38,7 @@
             </dependency>
             <dependency>
                 <groupId>org.infinispan</groupId>
-                <artifactId>infinispan-spring-boot-starter</artifactId>
+                <artifactId>infinispan-spring-boot-starter-embedded</artifactId>
                 <version>${version.spring.boot.infinispan}</version>
             </dependency>
         </dependencies>
@@ -47,14 +48,40 @@
         <dependency>
             <groupId>org.infinispan</groupId>
             <artifactId>infinispan-spring-boot-starter-embedded</artifactId>
-            <version>${version.spring.boot.infinispan}</version>
         </dependency>
 
+        <!-- Monitoring through Actuator -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-registry-prometheus</artifactId>
+        </dependency>
+
+        <!-- Lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Querying -->
+        <dependency>
+            <groupId>org.infinispan</groupId>
+            <artifactId>infinispan-query</artifactId>
+        </dependency>
+
+        <!-- Enable sessions -->
+        <dependency>
+            <groupId>org.springframework.session</groupId>
+            <artifactId>spring-session-core</artifactId>
+        </dependency>
+
+        <!-- Other SB dependencies -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -64,11 +91,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.session</groupId>
-            <artifactId>spring-session-core</artifactId>
         </dependency>
     </dependencies>
 
