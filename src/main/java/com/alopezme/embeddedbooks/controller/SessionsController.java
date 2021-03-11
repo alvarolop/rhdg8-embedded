@@ -6,11 +6,9 @@ import org.springframework.cache.support.SimpleValueWrapper;
 import org.springframework.session.MapSession;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
-
 @RestController
 @RequestMapping("sessions")
-public class UserSessionsController {
+public class SessionsController {
 
     public static final String LATEST_SESSION_VALUE = "latest";
     @Autowired

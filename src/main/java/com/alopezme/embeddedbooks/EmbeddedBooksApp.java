@@ -1,39 +1,16 @@
 package com.alopezme.embeddedbooks;
 
-import org.infinispan.configuration.cache.CacheMode;
-import org.infinispan.configuration.cache.Configuration;
-import org.infinispan.configuration.cache.ConfigurationBuilder;
-import org.infinispan.configuration.global.GlobalConfigurationBuilder;
 import org.infinispan.spring.embedded.session.configuration.EnableInfinispanEmbeddedHttpSession;
-import org.infinispan.spring.starter.embedded.InfinispanCacheConfigurer;
-import org.infinispan.spring.starter.embedded.InfinispanGlobalConfigurer;
+import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.context.annotation.Bean;
+import org.springframework.cache.annotation.EnableCaching;
 
 @SpringBootApplication
+@EnableCaching
 @EnableInfinispanEmbeddedHttpSession
-public class BooksApp {
-
-    @Bean
-    public InfinispanGlobalConfigurer globalCustomizer() {
-        return () -> GlobalConfigurationBuilder.defaultClusteredBuilder().build();
-    }
-
-    @Bean
-    public InfinispanCacheConfigurer cacheConfigurer() {
-        return manager -> {
-            final Configuration ispnConfig = new ConfigurationBuilder()
-                    .clustering()
-                    .cacheMode(CacheMode.DIST_SYNC)
-                    .build();
-
-
-            manager.defineConfiguration("sessions", ispnConfig);
-        };
-    }
+public class EmbeddedBooksApp {
 
     public static void main(String... args) {
-        new SpringApplicationBuilder().sources(BooksApp.class).run(args);
+        SpringApplication.run(EmbeddedBooksApp.class, args);
     }
 }
