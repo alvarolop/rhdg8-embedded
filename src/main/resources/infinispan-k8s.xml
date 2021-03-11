@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <infinispan>
     <cache-container statistics="true">
-<!--        <transport stack="kubernetes" />-->
-        <transport stack="tcp" />
+        <transport stack="kubernetes" />
         <serialization marshaller="org.infinispan.commons.marshall.JavaSerializationMarshaller">
             <white-list>
                 <regex>.*</regex>
