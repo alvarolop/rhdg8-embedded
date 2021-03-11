@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 @RestController
 @RequestMapping("admin")
@@ -67,7 +67,7 @@ public class AdminController {
         Cache< Integer, Book> cache = cacheManager.getNativeCacheManager().getCache("books");
         ObjectMapper mapper = new ObjectMapper();
 
-        try (BufferedReader br = new BufferedReader(new FileReader("src/main/resources/books.csv"))) {
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("/books.csv")))) {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] values = line.split(",");
@@ -85,7 +85,7 @@ public class AdminController {
         Cache< Integer, Book> cache = cacheManager.getNativeCacheManager().getCache("books");
         ObjectMapper mapper = new ObjectMapper();
 
-        try (BufferedReader br = new BufferedReader(new FileReader("src/main/resources/books.csv"))) {
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("/books.csv")))) {
             String line;
             int iteration = 0;
             while ((line = br.readLine()) != null && iteration < 100) {
