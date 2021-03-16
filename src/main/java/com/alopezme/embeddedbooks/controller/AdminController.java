@@ -26,6 +26,8 @@ public class AdminController {
 
     Logger logger = LoggerFactory.getLogger(AdminController.class);
 
+
+
     /***
      * MANAGE CACHES
      */
@@ -34,6 +36,8 @@ public class AdminController {
 
         return cacheManager.getCacheNames().toString();
     }
+
+
 
     /***
      * MANAGE CACHE: SIZE, LOAD, ETC.
@@ -44,24 +48,9 @@ public class AdminController {
         return  cacheManager.getCache("books").getNativeCache().entrySet().size() + System.lineSeparator();
     }
 
-    @GetMapping("/cache/test")
-    public String putOnCache() throws JsonProcessingException {
-
-        ObjectMapper mapper = new ObjectMapper();
-        Cache< Integer, Book> cache = cacheManager.getNativeCacheManager().getCache("books");
-        logger.info("Cache config => " + cache.getCacheConfiguration().toXMLString("books"));
-
-        // Put new entry
-        Book book = new Book(1, "Alvaro y la fuerza del sino", "Alvaro", 1993);
-        logger.info(mapper.writeValueAsString(book));
-        cache.put(1,book);
-
-        // Check new entry
-        return mapper.writeValueAsString(cache.get(1));
-    }
 
 
-    @GetMapping("/cache/load")
+    @GetMapping("/load")
     public String loadBooksCache() throws IOException {
 
         Cache< Integer, Book> cache = cacheManager.getNativeCacheManager().getCache("books");
@@ -79,7 +68,7 @@ public class AdminController {
         return "Books cache now contains " + cache.entrySet().size() + " entries";
     }
 
-    @GetMapping("/cache/miniload")
+    @GetMapping("/reduced-load")
     public String miniLoadBooksCache() throws IOException {
 
         Cache< Integer, Book> cache = cacheManager.getNativeCacheManager().getCache("books");
@@ -97,6 +86,26 @@ public class AdminController {
             }
         }
         return "Books cache now contains " + cache.entrySet().size() + " entries";
+    }
+
+    /***
+     * MISC & TESTING
+     */
+
+    @GetMapping("/cache/test")
+    public String putOnCache() throws JsonProcessingException {
+
+        ObjectMapper mapper = new ObjectMapper();
+        Cache< Integer, Book> cache = cacheManager.getNativeCacheManager().getCache("books");
+        logger.info("Cache config => " + cache.getCacheConfiguration().toXMLString("books"));
+
+        // Put new entry
+        Book book = new Book(1, "Alvaro y la fuerza del sino", "Alvaro", 1993);
+        logger.info(mapper.writeValueAsString(book));
+        cache.put(1,book);
+
+        // Check new entry
+        return mapper.writeValueAsString(cache.get(1));
     }
 
 

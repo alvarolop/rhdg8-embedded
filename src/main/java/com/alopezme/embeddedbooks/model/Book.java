@@ -2,10 +2,8 @@ package com.alopezme.embeddedbooks.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.*;
 import org.hibernate.search.annotations.*;
 
 import java.io.Serializable;
@@ -34,5 +32,12 @@ public class Book implements Serializable {
     @DateBridge(resolution= Resolution.YEAR)
     @JsonProperty("publicationYear")
     private int publicationYear;
+
+    @SneakyThrows
+    @Override
+    public String toString() {
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.writeValueAsString(this);
+    }
 
 }
