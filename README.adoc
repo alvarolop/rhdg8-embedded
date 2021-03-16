@@ -74,7 +74,7 @@ oc new-project $namespace --display-name="RHDG 8 - Embedded" --description="This
 ----
 
 
-Second, create two Config Maps that will store your application configuration:
+Second, create a ConfigMap that will store your application configuration:
 [source, bash]
 ----
 oc create configmap ${app_name}-config \
