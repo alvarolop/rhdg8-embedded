@@ -120,16 +120,6 @@ objects:
               name: ${APPLICATION_NAME}-config
     updateStrategy:
       type: RollingUpdate
-#    triggers:
-#      - type: ConfigChange
-#      - type: ImageChange
-#        imageChangeParams:
-#          automatic: true
-#          containerNames:
-#            - ${APPLICATION_NAME}
-#          from:
-#            kind: ImageStreamTag
-#            name: ${APPLICATION_NAME}:latest
 - apiVersion: v1
   kind: BuildConfig
   metadata:

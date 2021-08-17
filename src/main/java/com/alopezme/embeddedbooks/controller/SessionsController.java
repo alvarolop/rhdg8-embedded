@@ -7,7 +7,7 @@ import org.springframework.session.MapSession;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("sessions")
+@RequestMapping("session")
 public class SessionsController {
 
     public static final String LATEST_SESSION_VALUE = "latest";

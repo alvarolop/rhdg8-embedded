@@ -3,9 +3,9 @@
     <cache-container statistics="true">
         <transport stack="tcp" />
         <serialization marshaller="org.infinispan.commons.marshall.JavaSerializationMarshaller">
-            <white-list>
+            <allow-list>
                 <regex>.*</regex>
-            </white-list>
+            </allow-list>
         </serialization>
 <!--        <replicated-cache name="customers" statistics="true" />-->
     </cache-container>
