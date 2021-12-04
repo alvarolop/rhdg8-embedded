@@ -21,6 +21,8 @@ import java.io.InputStreamReader;
 @RequestMapping("admin")
 public class AdminController {
 
+    private String CACHE_NAME="books";
+
     @Autowired
     private SpringEmbeddedCacheManager cacheManager;
 
@@ -45,7 +47,7 @@ public class AdminController {
 
     @GetMapping("/cache/size")
     public String getAll()  {
-        return  cacheManager.getCache("books").getNativeCache().entrySet().size() + System.lineSeparator();
+        return  cacheManager.getCache(CACHE_NAME).getNativeCache().entrySet().size() + System.lineSeparator();
     }
 
 
@@ -53,7 +55,7 @@ public class AdminController {
     @GetMapping("/load")
     public String loadBooksCache() throws IOException {
 
-        Cache< Integer, Book> cache = cacheManager.getNativeCacheManager().getCache("books");
+        Cache< Integer, Book> cache = cacheManager.getNativeCacheManager().getCache(CACHE_NAME);
         ObjectMapper mapper = new ObjectMapper();
 
         try (BufferedReader br = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("/books.csv")))) {
@@ -71,7 +73,7 @@ public class AdminController {
     @GetMapping("/reduced-load")
     public String miniLoadBooksCache() throws IOException {
 
-        Cache< Integer, Book> cache = cacheManager.getNativeCacheManager().getCache("books");
+        Cache< Integer, Book> cache = cacheManager.getNativeCacheManager().getCache(CACHE_NAME);
         ObjectMapper mapper = new ObjectMapper();
 
         try (BufferedReader br = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("/books.csv")))) {
@@ -96,11 +98,11 @@ public class AdminController {
     public String putOnCache() throws JsonProcessingException {
 
         ObjectMapper mapper = new ObjectMapper();
-        Cache< Integer, Book> cache = cacheManager.getNativeCacheManager().getCache("books");
+        Cache< Integer, Book> cache = cacheManager.getNativeCacheManager().getCache(CACHE_NAME);
         logger.info("Cache config => " + cache.getCacheConfiguration().toXMLString("books"));
 
         // Put new entry
-        Book book = new Book(1, "Alvaro y la fuerza del sino", "Alvaro", 1993);
+        Book book = new Book(1, "Alvaro y la fuerza del sino", "Angel de Saavedra", 1835);
         logger.info(mapper.writeValueAsString(book));
         cache.put(1,book);
 
@@ -128,5 +130,25 @@ public class AdminController {
 //                "\"\":\"" + globalConfiguration. + "\"," +
                 "}";// Close JSON
         return result + System.lineSeparator();
+    }
+
+    @GetMapping("/cache-manager/cache-configuration")
+    public String getCacheInformation()  {
+
+        String result = "CACHES" + System.lineSeparator();
+        for ( String cache : cacheManager.getCacheNames()) {
+            result += cache + System.lineSeparator() + "-----------" + System.lineSeparator() + System.lineSeparator() +
+                    cacheManager.getNativeCacheManager().getCacheConfiguration(cache).toXMLString(cache) + System.lineSeparator();
+        }
+        result += ""+ System.lineSeparator();// Close JSON
+
+        return result + System.lineSeparator();
+    }
+
+    @GetMapping("/cache-manager/use-new-cache")
+    public String userNewCache()  {
+        String CACHE_NAME = "books";
+        return  cacheManager.getCache("books").getNativeCache().entrySet().size() + System.lineSeparator();
+
     }
 }

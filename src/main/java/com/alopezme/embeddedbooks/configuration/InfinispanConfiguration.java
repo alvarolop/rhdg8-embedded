@@ -24,7 +24,7 @@ public class InfinispanConfiguration {
         return manager -> {
             final Configuration ispnConfig = new ConfigurationBuilder()
                     .clustering()
-                    .cacheMode(CacheMode.DIST_SYNC)
+                    .cacheMode(CacheMode.REPL_SYNC)
                     .build();
 
 

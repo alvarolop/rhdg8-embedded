@@ -2,11 +2,25 @@
 <infinispan>
     <cache-container statistics="true">
         <transport stack="tcp" />
+        <distributed-cache-configuration name="*" owners="1" mode="ASYNC" statistics="true">
+            <!-- Con la configuración deseada, por ejemplo: -->
+            <state-transfer enabled="false"/>
+            <memory storage="HEAP" max-count="22000"/>
+            <expiration lifespan="1800000" />
+        </distributed-cache-configuration>
+        <!-- The following cache does not inherit the previous configuration, even meeting the wildcard condition -->
+        <distributed-cache name="books01">
+            <memory storage="HEAP" max-count="66"/>
+        </distributed-cache>
+        <!-- The following cache inherits the previous cache configuration and merges it with its
+            configuration because there is en exact coincidence and a "configuration" attribute -->
+        <distributed-cache name="books02" configuration="*">
+            <memory storage="HEAP" max-count="66"/>
+        </distributed-cache>
         <serialization marshaller="org.infinispan.commons.marshall.JavaSerializationMarshaller">
             <allow-list>
                 <regex>.*</regex>
             </allow-list>
         </serialization>
-<!--        <replicated-cache name="customers" statistics="true" />-->
     </cache-container>
 </infinispan>

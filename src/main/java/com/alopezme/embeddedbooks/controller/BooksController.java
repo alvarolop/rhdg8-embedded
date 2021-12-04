@@ -37,7 +37,11 @@ public class BooksController {
     }
 
 
-
+    @GetMapping("/put-entry")
+    public String putEntry() {
+        Book myBook = new Book(1, "Alvaro y la fuerza del sino", "Alvaro", 1993);
+        return bookRepository.insert(1, myBook ).toString();
+    }
 
 
 
