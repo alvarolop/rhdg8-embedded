@@ -12,8 +12,10 @@
         <version.spring.session>2.3.0.RELEASE</version.spring.session>
         <!-- RHDG 8.2.0 -->
 <!--        <version.infinispan>12.1.3.Final-redhat-00001</version.infinispan>-->
-        <!-- RHDG 8.2.0 -->
-        <version.infinispan>12.1.7.Final-redhat-00001</version.infinispan>
+        <!-- RHDG 8.2.1 -->
+<!--        <version.infinispan>12.1.7.Final-redhat-00001</version.infinispan>-->
+        <!-- RHDG 8.3.0 -->
+        <version.infinispan>13.0.0.Final</version.infinispan>
         <lombok.version>1.18.18</lombok.version>
         <java.version>11</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>

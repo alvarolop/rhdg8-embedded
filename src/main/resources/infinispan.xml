@@ -3,7 +3,6 @@
     <cache-container statistics="true">
         <transport stack="tcp" />
         <distributed-cache-configuration name="*" owners="1" mode="ASYNC" statistics="true">
-            <!-- Con la configuración deseada, por ejemplo: -->
             <state-transfer enabled="false"/>
             <memory storage="HEAP" max-count="22000"/>
             <expiration lifespan="1800000" />

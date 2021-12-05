@@ -2,10 +2,7 @@ package com.alopezme.embeddedbooks.configuration;
 
 
 import com.alopezme.embeddedbooks.model.Book;
-import org.infinispan.configuration.cache.CacheMode;
-import org.infinispan.configuration.cache.Configuration;
-import org.infinispan.configuration.cache.ConfigurationBuilder;
-import org.infinispan.configuration.cache.StorageType;
+import org.infinispan.configuration.cache.*;
 import org.infinispan.configuration.global.GlobalConfigurationBuilder;
 import org.infinispan.spring.starter.embedded.InfinispanCacheConfigurer;
 import org.infinispan.spring.starter.embedded.InfinispanGlobalConfigurer;
@@ -49,7 +46,7 @@ public class InfinispanConfiguration {
                     .enable()
                         .addIndexedEntity(Book.class)
                     // Set provider to heap to simplify running several instances in local
-                    .addProperty("default.directory_provider","local-heap")
+                    .storage(IndexStorage.LOCAL_HEAP)
                 .memory()
                     .storage(StorageType.HEAP)
 //                    .maxSize("100MB")

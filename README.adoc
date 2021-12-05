@@ -21,9 +21,9 @@ ifndef::env-github[]
 endif::[]
 // End: Enable admonition icons
 
-This repository contains a demo of Red Hat Data Grid 8 in Embedded mode (Library mode). It also contains all the Openshift resources to deploy the code easily.
+This repository contains a demo of Red Hat Data Grid 8 in Embedded mode (previously Library mode). It also contains all the Openshift resources to deploy the code easily.
 
-Some of the sections of the documentation and Java code are based on the official examples of Infinispan and Data Grid public repositories. Check the following repositories: https://github.com/redhat-developer/redhat-datagrid-tutorials[DG Tutorials] and https://github.com/jboss-developer/jboss-jdg-quickstarts/tree/jdg-7.3.x[DG Quickstarts].
+Some of the sections of the documentation and Java code are based on the official examples of Infinispan and Data Grid public repositories. Check the following repositories: https://github.com/redhat-developer/redhat-datagrid-tutorials[DG Tutorials] and https://github.com/infinispan/infinispan-simple-tutorials[Infinispan Simple Tutorials].
 
 // Create the Table of contents here
 toc::[]
@@ -62,32 +62,49 @@ Deploying your client application on OCP requires to create several Openshift ob
 
 [source, bash]
 ----
-export app_name=rhdg
-export namespace=rhdg8-embedded
-export git_repo=https://github.com/alvarolop/rhdg8-embedded.git
+export APP_NAME=rhdg
+export NAMESPACE=rhdg8-embedded
+export GIT_REPO=https://github.com/alvarolop/rhdg8-embedded.git
 ----
 
 First, create a project to host the application:
 [source, bash]
 ----
-oc new-project $namespace --display-name="RHDG 8 - Embedded" --description="This project contains an application with an embedded DataGrid cluster"
+oc new-project $NAMESPACE --display-name="RHDG 8 - Embedded" --description="This project contains an application with an embedded DataGrid cluster"
 ----
 
 
 Second, create a ConfigMap that will store your application configuration:
 [source, bash]
 ----
-oc create configmap ${app_name}-config \
+oc create configmap ${APP_NAME}-config \
 --from-file=infinispan.xml=src/main/resources/infinispan-k8s.xml \
 --from-file=application.properties=src/main/resources/application-k8s.properties \
---from-file=logback-spring.xml=src/main/resources/logback-spring-k8s.xml -n $namespace
+--from-file=logback-spring.xml=src/main/resources/logback-spring-k8s.xml -n $NAMESPACE
 ----
 
 Third, use an Openshift template to create your Openshift resources. This is the command to apply the template on your cluster:
 [source, bash]
 ----
-oc process -f templates/rhdg-embedded.yaml -p APPLICATION_NAME=$app_name -p GIT_REPOSITORY=$git_repo -p APP_NAMESPACE=$namespace | oc apply -f -
+oc process -f templates/rhdg-embedded.yaml -p APPLICATION_NAME=$APP_NAME -p GIT_REPOSITORY=$GIT_REPO -p APP_NAMESPACE=$NAMESPACE | oc apply -f -
 ----
+
+== Annex: Migrating to RHDG 8.3
+
+=== Migrating annotations to Hibernate 6
+
+It is important to notice that upgrading your application to RHDG 3.0 means upgrading to Hibernate 6. In this new version, some annotations have been deprecated. Use the following https://docs.jboss.org/hibernate/search/6.0/migration/html_single/#field[link] to migrate your annotations to the new ones. Check the https://docs.jboss.org/hibernate/stable/search/reference/en-US/html_single/#mapper-orm-directfieldmapping-annotations[following section] to understand the difference between `@GenericField`, `@FullTextField`, and `@KeywordField`.
+
+* `@Indexed` https://docs.jboss.org/hibernate/search/6.0/migration/html_single/#indexed-basics[is still available] in Hibernate Search 6, but moved to a different package: `org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed`.
+
+* `@DateBridge` https://docs.jboss.org/hibernate/search/6.0/migration/html_single/#datebridge[is not necessary] to index Date values: you can simply apply `@GenericField` to a property of type `java.util.Date`, `java.sql.Date`, `java.sql.Time` or `java.sql.Timestamp`, and an appropriate default bridge will be used.
+
+
+Check the https://infinispan.org/docs/dev/titles/developing/developing.html#embedded_query_example[configuration examples] with the new annotations for RHDG 8.3.
+
+=== Migrating indexing configuration
+
+Change how to configure Local Heap storage of the Indexes. https://infinispan.org/docs/dev/titles/upgrading/upgrading.html#storage[Link].
 
 
 == Useful links
